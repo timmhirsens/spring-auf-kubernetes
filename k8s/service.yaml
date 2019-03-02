@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: springonsk8s
+spec:
+  selector:
+    app: springonsk8s
+  ports:
+    - protocol: TCP
+      port: 8080
+      name: http
+  # Type `NodePort` wird nur für minikube verwendet. In einem richtigen Cluster sollte ClusterIp verwendet werden.      
+  #    targetPort: 8080
+  # type: NodePort

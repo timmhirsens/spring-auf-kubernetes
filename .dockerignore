@@ -1,0 +1,8 @@
+.gradle
+src/
+gradle/
+build/libs
+build/classes
+build/resources
+build/test-results
+build/tmp
