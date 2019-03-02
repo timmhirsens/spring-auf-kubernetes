@@ -6,6 +6,7 @@ events.on("push", function(e, project) {
   const job = new Job("gradle", "openjdk:11.0.2-jdk-slim-stretch");
 
   job.tasks = [
+    "cd src",
     "./gradlew build"
   ]
 
