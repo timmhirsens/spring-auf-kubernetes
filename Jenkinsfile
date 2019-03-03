@@ -44,7 +44,7 @@ pipeline {
                         branch 'develop'
                     }
                     steps {
-                        sh "echo 'Deploying to dev using $env.K8S_API_SERVER'"
+                        sh "echo 'Deploying to dev using ${env.KUBE_API_SERVER}'"
                     } 
                 }
                 stage("Deploy to staging") {
@@ -52,7 +52,7 @@ pipeline {
                         branch 'master'
                     }
                     steps {
-                        sh "echo 'Deploying to staging using $env.K8S_API_SERVER'"
+                        sh "echo 'Deploying to staging using ${env.KUBE_API_SERVER}'"
                     } 
                 }                
             }
