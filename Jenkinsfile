@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage("Build") {
             agent {
-                label 'java'
+                label 'build'
             }
             stages {
                 stage("Gradle Build") {
@@ -33,5 +33,30 @@ pipeline {
                 }
             }
         }
+
+        stage("Deploy") {
+            agent {
+                label 'deploy'
+            }
+            stages {
+                stage("Deploy to dev") {
+                    when {
+                        branch 'develop'
+                    }
+                    steps {
+                        sh "echo 'Deploying to dev using env.K8S_API_SERVER'"
+                    } 
+                }
+                stage("Deploy to staging") {
+                    when {
+                        branch 'master'
+                    }
+                    steps {
+                        sh "echo 'Deploying to staging using env.K8S_API_SERVER'"
+                    } 
+                }                
+            }
+        }
+
     }
 }
