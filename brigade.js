@@ -24,5 +24,7 @@ events.on("push", function(e, project) {
   dockerBuild.docker.enabled = true;
   dockerBuild.privileged = true;
 
+  console.log(JSON.stringify(dockerBuild, 2));
+
   Group.runEach([gradleBuild, dockerBuild]);
 });
