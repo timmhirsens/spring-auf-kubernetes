@@ -21,9 +21,10 @@ events.on("push", function(e, project) {
   dockerBuild.resourceRequests.cpu = "100m";
   dockerBuild.resourceLimits.memory = "400Mi";
   dockerBuild.resourceLimits.cpu = "200m";
-  dockerBuild.docker.enabled = true;
   dockerBuild.privileged = true;
-
+  dockerBuild.env = {
+    DOCKER_DRIVER: "overlay"
+  }
   console.log(JSON.stringify(dockerBuild, 2));
 
   Group.runEach([gradleBuild, dockerBuild]);
