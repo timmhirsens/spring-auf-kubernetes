@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
-    certmanager.k8s.io/issuer: "letsencrypt-prod"
+    certmanager.k8s.io/cluster-issuer: "letsencrypt-prod"
     certmanager.k8s.io/acme-challenge-type: http01
   labels:
     app: spring-auf-kubernetes
