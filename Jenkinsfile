@@ -52,9 +52,11 @@ pipeline {
                         branch 'master'
                     }
                     steps {
-                        sh "echo 'Deploying to staging using ${env.KUBE_API_SERVER}'"
-                        withKubeConfig([credentialsId: 'jenkins-sa-token', serverUrl: env.KUBE_API_SERVER]) {
-                            sh "kubectl get po -n staging"
+                        container("kubectl") {
+                            sh "echo 'Deploying to staging using ${env.KUBE_API_SERVER}'"
+                            withKubeConfig([credentialsId: 'jenkins-sa-token', serverUrl: env.KUBE_API_SERVER]) {
+                                sh "kubectl get po -n staging"
+                            }
                         }
                     } 
                 }                
