@@ -22,8 +22,7 @@ events.on("push", function(e, project) {
   dockerBuild.resourceLimits.memory = "400Mi";
   dockerBuild.resourceLimits.cpu = "200m";
   dockerBuild.docker.enabled = true;
-  dockerBuild.priviliged = true;
+  dockerBuild.privileged = true;
 
-  gradleBuild.run();
-  dockerBuild.run();
+  Group.runEach(gradleBuild, dockerBuild);
 });
