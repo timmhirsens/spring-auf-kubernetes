@@ -62,23 +62,27 @@ pipeline {
             }
         }
 
-        stage("Promote to Prod") {
-            steps {
-                input message: 'Deploy to Prod?', parameters: [choice(choices: ['Yes', 'No'], description: 'Should the build be promoted to prod', name: 'PROMOTE')]
+        lock("Promotion To Prod") {
+            stage("Promote to Prod") {
+                steps {
+                    input 'Deploy to Prod?'
+                }
+            }
+
+            stage("Deploy to Prod") {
+                agent {
+                    label 'deploy'
+                }            
+                when {
+                    branch 'master'
+                }
+                steps {
+                    milestone()
+                    deployToKubernetes(dockerTag, "prod")
+                }
             }
         }
 
-        stage("Deploy to Prod") {
-           agent {
-                label 'deploy'
-            }            
-            when {
-                branch 'master'
-            }
-            steps {
-                sh "echo ${env.PROMOTE}"
-            }
-        }
 
     }
 }
