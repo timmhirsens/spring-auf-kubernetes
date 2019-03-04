@@ -3,20 +3,21 @@ kind: Ingress
 metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
-    kubernetes.io/tls-acme: "true"
+    certmanager.k8s.io/issuer: "letsencrypt-prod"
+    certmanager.k8s.io/acme-challenge-type: http01
   labels:
-    app: springonsk8s
-  name: springonsk8s
+    app: spring-auf-kubernetes
+  name: spring-auf-kubernetes
 spec:
   rules:
-  - host: timmhirsens-springonsk8s.67.207.72.83.nip.io
+  - host: spring-auf-kubernetes.br0tbox.de
     http:
       paths:
       - backend:
-          serviceName: springonsk8s
+          serviceName: spring-auf-kubernetes
           servicePort: 8080
         path: /
   tls:
   - hosts:
-    - timmhirsens-springonsk8s.67.207.72.83.nip.io
-    secretName: springonsk8s-tls
+    - spring-auf-kubernetes.br0tbox.de
+    secretName: spring-auf-kubernetes-tls

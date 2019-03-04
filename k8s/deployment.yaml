@@ -1,26 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: springonsk8s
+  name: spring-auf-kubernetes
   labels:
-    app: springonsk8s
+    app: spring-auf-kubernetes
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: springonsk8s
+      app: spring-auf-kubernetes
   template:
     metadata:
       labels:
-        app: springonsk8s
+        app: spring-auf-kubernetes
       annotations:
         prometheus.io/path: "/actuator/prometheus"
         prometheus.io/port: "8080"
         prometheus.io/scrape: "true"
     spec:
       containers:
-        - name: springonsk8s
-          image: fr1zle/spring-on-sk8s:20190227202627
+        - name: spring-auf-kubernetes
+          image: fr1zle/spring-auf-kubernetes:20190227202627
           ports:
             - containerPort: 8080
             - containerPort: 1099

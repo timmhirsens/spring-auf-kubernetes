@@ -1,10 +1,10 @@
-apiVersion: authentication.istio.io/v1alpha1
-kind: Policy
-metadata:
-  name: springonsk8s-permissive
-spec:
-  targets:
-  - name: springonsk8s
-  peers:
-  - mtls:
-      mode: PERMISSIVE
+# apiVersion: authentication.istio.io/v1alpha1
+# kind: Policy
+# metadata:
+#   name: springonsk8s-permissive
+# spec:
+#   targets:
+#   - name: springonsk8s
+#   peers:
+#   - mtls:
+#      mode: PERMISSIVE

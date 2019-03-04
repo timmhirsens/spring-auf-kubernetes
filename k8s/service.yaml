@@ -1,10 +1,10 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: springonsk8s
+  name: spring-auf-kubernetes
 spec:
   selector:
-    app: springonsk8s
+    app: spring-auf-kubernetes
   ports:
     - protocol: TCP
       port: 8080

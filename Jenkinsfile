@@ -26,8 +26,12 @@ pipeline {
                         container("docker") {
                             script {
                                 shortCommit = env.GIT_COMMIT.take(8)
+                                dockerTag = "fr1zle/spring-auf-kubernetes:$shortCommit"
                             }
-                            sh "docker build . -t fr1zle/spring-on-sk8s:$shortCommit"
+                            withDockerRegistry(credentialsId: 'dockerhub') {
+                                sh "docker build . -t $dockerTag"
+                                sh "docker push $dockerTag"
+                            }
                         }
                     }
                 }
@@ -55,7 +59,8 @@ pipeline {
                         container("kubectl") {
                             sh "echo 'Deploying to staging using ${env.KUBE_API_SERVER}'"
                             withKubeConfig([credentialsId: 'jenkins-sa-token', serverUrl: env.KUBE_API_SERVER]) {
-                                sh "kubectl get po -n staging"
+                                sh "sed -i.bak 's#fr1zle/spring-on-sk8s:.*#$dockerTag#'' k8s/deployment.yaml"
+                                sh "kubectl apply -f k8s/ -n staging"
                             }
                         }
                     } 
