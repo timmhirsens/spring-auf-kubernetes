@@ -56,20 +56,33 @@ pipeline {
                         branch 'master'
                     }
                     steps {
-                        container("kubectl") {
-                            sh "echo 'Deploying to staging using ${env.KUBE_API_SERVER}'"
-                            withKubeConfig([credentialsId: 'jenkins-sa-token', serverUrl: env.KUBE_API_SERVER]) {
-                                sh "sed -i 's#fr1zle/spring-auf-kubernetes:.*#${dockerTag}#' k8s/deployment.yaml"
-                                sh "kubectl apply -f k8s/ingress-staging.yaml -n staging"
-                                sh "kubectl apply -f k8s/service.yaml -n staging"
-                                sh "kubectl apply -f k8s/deployment.yaml -n staging"
-                                sh "kubectl rollout status deploy/spring-auf-kubernetes -w -n staging"
-                            }
-                        }
+                        deployToKubernetes(dockerTag, "staging")
                     } 
                 }                
             }
         }
 
+        stage("Promote to Prod") {
+            steps {
+                input message: 'Deploy to Prod?', parameters: [choice(choices: ['Yes', 'No'], description: 'Should the build be promoted to prod', name: 'PROMOTE')]
+                sh "echo ${env.PROMOTE}"
+            }
+        }
+
     }
+}
+
+
+def deployToKubernetes(String dockerTag, String namespace) {
+        container("kubectl") {
+        sh "echo 'Deploying to staging using ${env.KUBE_API_SERVER}'"
+        withKubeConfig([credentialsId: 'jenkins-sa-token', serverUrl: env.KUBE_API_SERVER]) {
+            sh "sed -i 's#fr1zle/spring-auf-kubernetes:.*#${dockerTag}#' k8s/deployment.yaml"
+            sh "kubectl apply -f k8s/ingress-${namespace}.yaml -n ${namespace}"
+            sh "kubectl apply -f k8s/service.yaml -n ${namespace}"
+            sh "kubectl apply -f k8s/deployment.yaml -n ${namespace}"
+            sh "kubectl rollout status deploy/spring-auf-kubernetes -w -n ${namespace}"
+        }
+    }
+
 }
