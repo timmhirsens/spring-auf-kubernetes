@@ -59,8 +59,9 @@ pipeline {
                         container("kubectl") {
                             sh "echo 'Deploying to staging using ${env.KUBE_API_SERVER}'"
                             withKubeConfig([credentialsId: 'jenkins-sa-token', serverUrl: env.KUBE_API_SERVER]) {
-                                sh "sed -i.bak 's#fr1zle/spring-on-sk8s:.*#$dockerTag#'' k8s/deployment.yaml"
+                                sh "sed -i 's#fr1zle/spring-auf-kubernetes:.*#${dockerTag}#' k8s/deployment.yml"
                                 sh "kubectl apply -f k8s/ -n staging"
+                                sh "kubectl rollout status deploy/spring-auf-kubernetes -w -n $namespace"
                             }
                         }
                     } 
