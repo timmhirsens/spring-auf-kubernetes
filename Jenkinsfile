@@ -78,7 +78,7 @@ pipeline {
                 branch 'master'
             }
             steps {
-                milestone()
+                milestone label: 'prod', ordinal: 1
                 deployToKubernetes(dockerTag, "prod")
             }
         }
