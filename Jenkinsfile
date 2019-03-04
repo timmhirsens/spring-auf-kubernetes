@@ -28,7 +28,7 @@ pipeline {
                                 shortCommit = env.GIT_COMMIT.take(8)
                                 dockerTag = "fr1zle/spring-auf-kubernetes:$shortCommit"
                             }
-                            withDockerRegistry(credentialsId: 'dockerhub') {
+                            withDockerRegistry(url: '', credentialsId: 'dockerhub') {
                                 sh "docker build . -t $dockerTag"
                                 sh "docker push $dockerTag"
                             }
