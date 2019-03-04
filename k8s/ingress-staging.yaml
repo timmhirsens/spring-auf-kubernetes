@@ -20,4 +20,4 @@ spec:
   tls:
   - hosts:
     - spring-auf-kubernetes.staging.br0tbox.de
-    secretName: spring-auf-kubernetes-tls
+    secretName: spring-auf-kubernetes-staging-tls

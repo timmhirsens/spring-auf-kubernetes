@@ -20,4 +20,4 @@ spec:
   tls:
   - hosts:
     - spring-auf-kubernetes.dev.br0tbox.de
-    secretName: spring-auf-kubernetes-tls
+    secretName: spring-auf-kubernetes-dev-tls

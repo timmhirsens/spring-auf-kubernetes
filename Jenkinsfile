@@ -63,7 +63,7 @@ pipeline {
                                 sh "kubectl apply -f k8s/ingress-staging.yaml -n staging"
                                 sh "kubectl apply -f k8s/service.yaml -n staging"
                                 sh "kubectl apply -f k8s/deployment.yaml -n staging"
-                                sh "kubectl rollout status deploy/spring-auf-kubernetes -w -n $namespace"
+                                sh "kubectl rollout status deploy/spring-auf-kubernetes -w -n staging"
                             }
                         }
                     } 
