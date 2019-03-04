@@ -62,27 +62,24 @@ pipeline {
             }
         }
 
-        stage("Production") {
-            stages {
+        
+        stage("Promote to Prod") {
+            steps {
                 lock("Promotion To Prod") {
-                    stage("Promote to Prod") {
-                        steps {
-                            input 'Deploy to Prod?'
-                        }
-                    }
-                    stage("Deploy to Prod") {
-                        agent {
-                            label 'deploy'
-                        }            
-                        when {
-                            branch 'master'
-                        }
-                        steps {
-                            milestone()
-                            deployToKubernetes(dockerTag, "prod")
-                        }
-                    }
+                    input 'Deploy to Prod?'
                 }
+            }
+        }
+        stage("Deploy to Prod") {
+            agent {
+                label 'deploy'
+            }            
+            when {
+                branch 'master'
+            }
+            steps {
+                milestone()
+                deployToKubernetes(dockerTag, "prod")
             }
         }
     }
