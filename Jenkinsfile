@@ -49,6 +49,7 @@ pipeline {
                     }
                     steps {
                         sh "echo 'Deploying to dev using ${env.KUBE_API_SERVER}'"
+                        deployToKubernetes(dockerTag, "dev")
                     } 
                 }
                 stage("Deploy to staging") {
