@@ -21,6 +21,8 @@ events.on("push", function(e, project) {
   dockerBuild.resourceRequests.cpu = "100m";
   dockerBuild.resourceLimits.memory = "400Mi";
   dockerBuild.resourceLimits.cpu = "200m";
+  dockerBuild.docker.enabled = true;
+  dockerBuild.priviliged = true;
 
   gradleBuild.run();
   dockerBuild.run();

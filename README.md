@@ -60,6 +60,13 @@ Neben dem JDK ist auch [tini](https://github.com/krallin/tini) installiert. `tin
 
 Die Konfigurationsdatein für Kubernetes befinden sich im Ordner `k8s`.
 
+### Deployment
+
 Die Datei `deployment.yaml` beschreibt wie unsere "containerisierte" Spring Boot Anwendung von Kubernetes deployed werden soll.
 
+### Service
+
+### Ingress
+
+## Build Pipeline
 
