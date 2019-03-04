@@ -65,6 +65,14 @@ pipeline {
         stage("Promote to Prod") {
             steps {
                 input message: 'Deploy to Prod?', parameters: [choice(choices: ['Yes', 'No'], description: 'Should the build be promoted to prod', name: 'PROMOTE')]
+            }
+        }
+
+        stage("Deploy to Prod") {
+            when {
+                branch 'master'
+            }
+            steps {
                 sh "echo ${env.PROMOTE}"
             }
         }
