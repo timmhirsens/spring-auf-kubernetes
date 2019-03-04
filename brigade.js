@@ -8,6 +8,8 @@ events.on("push", function(e, project) {
     8
   )}`;
 
+  const driver = project.secrets.DOCKER_DRIVER || "overlay";
+
   const gradleBuild = new Job("gradle", "openjdk:11.0.2-jdk-slim-stretch");
   gradleBuild.tasks = ["cd src", "./gradlew build"];
   gradleBuild.resourceRequests.memory = "512Mi";
@@ -16,15 +18,20 @@ events.on("push", function(e, project) {
   gradleBuild.resourceLimits.cpu = "1";
 
   const dockerBuild = new Job("docker", "docker:18.09.3-dind");
-  dockerBuild.task = ["cd src", `docker build . -t ${dockerTag}`];
+  dockerBuild.task = [
+    "dockerd-entrypoint.sh &",
+    "sleep 20",
+    "cd src/",
+    `docker build . -t ${dockerTag}`
+  ];
   dockerBuild.resourceRequests.memory = "200Mi";
   dockerBuild.resourceRequests.cpu = "100m";
   dockerBuild.resourceLimits.memory = "400Mi";
   dockerBuild.resourceLimits.cpu = "200m";
   dockerBuild.privileged = true;
   dockerBuild.env = {
-    DOCKER_DRIVER: "overlay"
-  }
+    DOCKER_DRIVER: driver
+  };
   console.log(JSON.stringify(dockerBuild, 2));
 
   Group.runEach([gradleBuild, dockerBuild]);
