@@ -65,6 +65,9 @@ pipeline {
 
         
         stage("Promote to Prod") {
+            when {
+                branch 'master'
+            }            
             steps {
                 lock("Promotion To Prod") {
                     input 'Deploy to Prod?'
