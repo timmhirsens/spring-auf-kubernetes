@@ -1,6 +1,6 @@
 FROM centos:centos7.6.1810
 
-MAINTAINER Timm Hirsens <timmhirsens@gmail.com>
+LABEL maintainer="Timm Hirsens <mai@timmhirsens.de>"
 
 ENV TINI_VERSION v0.18.0
 
