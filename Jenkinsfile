@@ -17,7 +17,7 @@ pipeline {
                 stage("Gradle Build") {
                     steps {
                         container("openjdk-11") {
-                            sh "./gradlew build"
+                            sh "./gradlew build --no-daemon --stacktrace"
                         }
                     }                   
                 }
