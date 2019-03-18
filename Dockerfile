@@ -1,4 +1,4 @@
-FROM fr1zle/openjdk:11.0.1.13-1
+FROM fr1zle/openjdk:11.0.2.7-1
 
 RUN /usr/bin/java -Xshare:dump
 
